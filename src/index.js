@@ -91,11 +91,7 @@ class WebsocketProvider {
   async _refreshToken() {
     try {
       const token = await this.getAccessToken();
-      
-      this.headers.push({
-        name: 'Authorization',
-        value: `Bearer ${token}`
-      });
+      this.headers['Authorization'] = `Bearer ${token}`;
       
       this._tick();
     }
