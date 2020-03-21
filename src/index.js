@@ -44,19 +44,20 @@ class WebsocketProvider {
     // username/password in the URL. So generate the basic auth header, and
     // pass through with any additional headers supplied in constructor
     const parsedURL = parseURL(url);
-    const headers = options.headers || {};
-    const protocol = options.protocol || undefined;
+    this.headers = options.headers || {};
+    this.url = url;
+    this.protocol = options.protocol || undefined;
 
     if (parsedURL.username && parsedURL.password) {
       headers.authorization = 'Basic ' + _btoa(parsedURL.username + ':' + parsedURL.password);
     }
 
     // Allow a custom client configuration
-    const clientConfig = options.clientConfig;
+    this.clientConfig = options.clientConfig;
 
     // Allow a custom request options
     // https://github.com/theturtle32/WebSocket-Node/blob/master/docs/WebSocketClient.md#connectrequesturl-requestedprotocols-origin-headers-requestoptions
-    const requestOptions = options.requestOptions;
+    this.requestOptions = options.requestOptions;
 
     // When all node core implementations that do not have the
     // WHATWG compatible URL parser go out of service this line can be removed.
@@ -64,9 +65,7 @@ class WebsocketProvider {
       headers.authorization = 'Basic ' + _btoa(parsedURL.auth);
     }
 
-    this.connection = new Ws(url, protocol, undefined, headers, requestOptions, clientConfig);
-    this.addDefaultEvents();
-    this.connection.onmessage = this.onmessage;
+    this.createConnection();
 
     // make property `connected` which will return the current connection status
     Object.defineProperty(this, 'connected', {
@@ -88,10 +87,25 @@ class WebsocketProvider {
     });
   }
 
+  createConnection() {
+    this.connection = new Ws(
+      this.url, 
+      this.protocol, 
+      undefined, 
+      this.headers, 
+      this.requestOptions, 
+      this.clientConfig
+    );
+
+    this.addDefaultEvents();
+    this.connection.onmessage = this.onmessage;
+  }
+
   async _refreshToken() {
     try {
       const token = await this.getAccessToken();
       this.headers['Authorization'] = `Bearer ${token}`;
+      this.createConnection();
       
       this._tick();
     }
