@@ -1,0 +1,13 @@
+{
+  "name": "web3-ws-auth-provider",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ppoliani/web3-ws-auth-provider.git",
+  "author": "ppoliani <ppoliani@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@web3-js/websocket": "^1.0.30",
+    "underscore": "^1.9.2",
+    "web3-core-helpers": "^1.2.6"
+  }
+}
