@@ -117,12 +117,11 @@ class WebsocketProvider {
   async _syncAuth() {
     if(this.getAccessToken !== null) {
       await this._refreshToken();
-      this._tick()
     }
   }
 
   _tick() {
-    setTimeout(() => this.syncAuth(), this.syncInterval)
+    setTimeout(() => this._syncAuth(), this.syncInterval)
   }
 
   onmessage(e) {
@@ -161,7 +160,7 @@ class WebsocketProvider {
   }
   
   addDefaultEvents() {
-    this.connection.onerror = this._timeout();
+    this.connection.onerror = this._timeout;
 
     this.connection.onclose = () => {
       this._timeout();
@@ -249,7 +248,7 @@ class WebsocketProvider {
   send(payload, callback) {
     if (this.connection.readyState === this.connection.CONNECTING) {
       setTimeout(() =>  {
-          this.send(payload, callback);
+        this.send(payload, callback);
       }, 10);
       
       return;
