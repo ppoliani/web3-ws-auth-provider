@@ -1,10 +1,11 @@
 {
   "name": "web3-ws-auth-provider",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "git@github.com:ppoliani/web3-ws-auth-provider.git",
   "author": "ppoliani <ppoliani@gmail.com>",
   "license": "MIT",
+  "keywords": ["ethereum", "blockchain", "web3.js"],
   "dependencies": {
     "@web3-js/websocket": "^1.0.30",
     "underscore": "^1.9.2",
