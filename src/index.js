@@ -98,7 +98,7 @@ class WebsocketProvider {
     );
 
     this.addDefaultEvents();
-    this.connection.onmessage = this.onmessage;
+    this.connection.onmessage = this.onmessage.bind(this);
   }
 
   async _refreshToken() {
