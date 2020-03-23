@@ -116,7 +116,12 @@ class WebsocketProvider {
 
   async _syncAuth() {
     if(this.getAccessToken !== null) {
-      await this._refreshToken();
+      try {
+        await this._refreshToken();
+      }
+      catch {
+        // do nothing
+      }
     }
   }
 
