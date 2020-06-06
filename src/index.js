@@ -120,13 +120,13 @@ class WebsocketProvider {
         await this._refreshToken();
       }
       catch {
-        // do nothing
+        this._tick(10000); // retry in 10 secs
       }
     }
   }
 
-  _tick() {
-    setTimeout(() => this._syncAuth(), this.syncInterval)
+  _tick(ts=this.syncInterval) {
+    setTimeout(() => this._syncAuth(), ts)
   }
 
   onmessage(e) {
