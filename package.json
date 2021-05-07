@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "@web3-js/websocket": "^1.0.30",
-    "underscore": "^1.9.2",
+    "underscore": "^1.12.1",
     "web3-core-helpers": "^1.2.6"
   }
 }
